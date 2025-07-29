@@ -25,3 +25,6 @@ def main():
             print(f"✅ UPDATED：generated/{img}")
         except Exception as e:
             print(f"❌ UPDATE FAILED：generated/{img}, ERROR：{e}")
+
+if __name__ == "__main__":
+    main()
