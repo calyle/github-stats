@@ -1,6 +1,11 @@
 from github import Github
 from os import getenv
-import base64
+import hashlib
+
+def blob_sha1(content: bytes) -> str:
+    header = f"blob {len(content)}\0".encode('utf-8')
+    blob_content = header + content
+    return hashlib.sha1(blob_content).hexdigest()
 
 def main():
     github_token = getenv("GITHUB_TOKEN")
@@ -15,6 +20,9 @@ def main():
             new_content = f.read()
         try:
             old_content = repo.get_contents(f'generated/{img}')
+            new_sha = blob_sha1(new_content)
+            if new_sha == old_content.sha:
+                continue
             repo.update_file(
                 path=f'generated/{img}',
                 message=f'Update generated/{img}',
