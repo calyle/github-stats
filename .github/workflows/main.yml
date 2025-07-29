@@ -47,3 +47,5 @@ jobs:
     # Commit all changed files to the repository
     - name: Commit to the repo
       run: python3 commit_changes.py
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
