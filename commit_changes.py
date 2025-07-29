@@ -12,15 +12,14 @@ def main():
 
     for img in changed_images:
         with open(f'generated/{img}', 'rb') as f:
-            content = f.read()
-            encoded_content = base64.b64encode(content).decode('utf-8')
+            new_content = f.read()
         try:
-            contents = repo.get_contents(f'generated/{img}')
+            old_content = repo.get_contents(f'generated/{img}')
             repo.update_file(
                 path=f'generated/{img}',
                 message=f'Update generated/{img}',
-                content=encoded_content,
-                sha=contents.sha,
+                content=new_content,
+                sha=old_content.sha,
             )
             print(f"✅ UPDATED：generated/{img}")
         except Exception as e:
